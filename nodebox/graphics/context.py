@@ -25,6 +25,7 @@ from StringIO     import StringIO
 from hashlib      import md5
 from types        import FunctionType
 from datetime     import datetime
+from itertools    import chain
 
 import geometry
 
@@ -630,7 +631,7 @@ def ellipse(x, y, width, height, segments=ELLIPSE_SEGMENTS, **kwargs):
         # Then reuse the cached ellipse by scaling it to the desired size.
         commands = []
         f = 2 * pi / segments
-        v = [(cos(t)/2, sin(t)/2) for t in [i*f for i in range(segments)+[0]]]
+        v = [(cos(t)/2, sin(t)/2) for t in [i*f for i in chain(range(segments), [0])]]
         for mode in (GL_TRIANGLE_FAN, GL_LINE_LOOP):
             commands.append(precompile(lambda:(
                glBegin(mode),
